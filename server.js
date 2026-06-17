@@ -1,23 +1,9 @@
-const {createClient}=require('redis')
 const express=require('express')
 const app=express()
-const redisurl="redis://localhost:6379"
+const fixed = require("./FixedWindow")
 
-const redisclient=createClient({url:redisurl})
 
-const connectRedis=async()=>{
-    try{
-        await redisclient.connect()
-        console.log("connected To Redis")
-        console.log("Ping",await redisclient.ping())
-    }
-    catch(err){
-        console.log("Errror connecting to Redis:",err)
-    }
-}
-connectRedis()
-
-app.get("/",(req,res)=>{
+app.get("/",fixed,(req,res)=>{
     res.send("Hello Wolrd in the HomePage")
 })
 
