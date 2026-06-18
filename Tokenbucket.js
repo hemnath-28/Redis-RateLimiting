@@ -34,10 +34,12 @@ async function tokenBucket(req,res,next){
                 .json("Too Many Requests")
         }
     tokens--;
+    await client.get
     await client.hSet(key,{
         token:tokens,
         lastrefill:time
     })
+    client.INCR
     await client.expire(key,60)
     console.log(
             `IP=${ip} Tokens Remaining=${tokens.toFixed(2)}`
